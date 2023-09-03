@@ -23,14 +23,13 @@ class MediaMessage(Message):
         self.validate_media_url(self.media_url)
 
     def validate_media_type(self, media_type):
-        if not media_type.strip():
-            raise ValueError("Media Type must not be empty")
-        assert media_type in (
+        if media_type not in (
             "image",
             "video",
             "audio",
             "file",
-        ), 'value of param media_type must be "image","video","audio" or "file"'
+        ):
+            raise ValueError("value of param media_type must be 'image','video','audio' or 'file'")
 
     def validate_media_url(self, media_url):
         if not media_url.strip():

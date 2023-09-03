@@ -22,3 +22,15 @@ def test_creation_text_empty():
 
     with pytest.raises(ValueError, match="Text must not be empty"):
         TextMessage(text="\t\n  \t")
+
+
+def test_asdict():
+	message_dict = dict(
+		notification_type=NOTICIFICATION_TYPE,
+		messaging_type=MESSAGING_TYPE,
+		message=dict(text=TEXT_MESSAGE)
+	)
+
+	text_message_dict = TextMessage(text=TEXT_MESSAGE).asdict()
+
+	assert message_dict == text_message_dict
