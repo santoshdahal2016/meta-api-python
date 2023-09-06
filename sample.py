@@ -16,7 +16,7 @@ api = Api(
 
 
 # Action Message
-action = Action(event=SenderAction.TYPING_ON)
+action = Action(SenderAction.TYPING_ON)
 
 
 # Text Message

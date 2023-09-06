@@ -6,7 +6,6 @@ from dataclasses import dataclass, asdict
 @dataclass
 class TextMessage(Message):
     """This reprsent text message
-
     Args:
         text (str): The message to be send.
 

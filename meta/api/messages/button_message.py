@@ -15,7 +15,9 @@ class Buttons:
     """
 
     def __init__(self, text):
-        assert text != "", "param text must be non empty"
+        if  not text.strip():
+            raise ValueError("Text must not be empty")
+
         self.text = text
         self.__buttons = []
 
@@ -51,19 +53,22 @@ class Button:
             If the button is a web_url button , use set_url() method to change the default value.
             Use the asdict() method to get the content of the Button object before using it.
         """
-        assert button_type in (
+        if  button_type not  in (
             ButtonType.POSTBACK,
             ButtonType.WEB_URL,
             ButtonType.PHONE_NUMBER,
             ButtonType.BOOKING,
-        ), "param type must be POSTBACK, WEB_URL, BOOKING  or PHONE_NUMBER"
-        assert isinstance(
-            title, str
-        ), f"type of param title must be str , not {type(title)}"
-        assert title != "", "param title must be non empty"
+        ):
+            raise ValueError("param type must be POSTBACK, WEB_URL, BOOKING  or PHONE_NUMBER")
+
+        if not  isinstance( title, str):
+            raise ValueError(f"type of param title must be str , not {type(title)}")
+
+        if not title.strip():
+            raise ValueError("param title must be non empty")
 
         self.__type = button_type
-        self.__title = title
+        self.title = title
 
         if self.__type == ButtonType.POSTBACK:
             self.__payload = "<DEVELOPER_DEFINED_PAYLOAD>"
@@ -71,31 +76,44 @@ class Button:
             self.__url = "<DEVELOPER_DEFINED_URL>"
 
     def set_title(self, title):
-        assert isinstance(
-            title, str
-        ), f"type of param title must be str , not {type(title)}"
-        assert title != "", "param title must be non empty"
+        if not  isinstance( title, str):
+            raise ValueError(f"type of param title must be str , not {type(title)}")
 
-        self.__title = title
+        if not title.strip():
+            raise ValueError("param title must be non empty")
+
+        self.title = title
 
     def set_payload(self, payload):
-        assert self.__type in (
+        if  self.__type not in (
             ButtonType.POSTBACK,
             ButtonType.PHONE_NUMBER,
-        ), "param payload is only supported on postback and phone_number buttons"
-        assert isinstance(
+        ):
+            raise ValueError("param payload is only supported on postback and phone_number buttons")
+        
+        if not isinstance(
             payload, str
-        ), f"type of param payload must be str , not {type(payload)}"
+        ):
+            raise ValueError(f"type of param payload must be str , not {type(payload)}")
 
         self.__payload = payload
+    
+    def get_payload(self):
+        return self.__payload
 
     def set_url(self, url):
-        assert (
-            self.__type == ButtonType.WEB_URL
-        ), "param url is only supported on web_url buttons"
-        assert isinstance(url, str), f"type of param url must be str , not {type(url)}"
+        if  self.__type != ButtonType.WEB_URL:
+            raise ValueError("param url is only supported on web_url buttons")
+
+        if not isinstance(url, str):
+            raise ValueError(f"type of param url must be str , not {type(url)}")
 
         self.__url = url
+
+
+    def get_url(self):
+        return self.__url
+
 
     def asdict(self):
         """Return the content of the Button object.
@@ -106,10 +124,10 @@ class Button:
         if self.__type == ButtonType.POSTBACK or self.__type == ButtonType.PHONE_NUMBER:
             return {
                 "type": self.__type,
-                "title": self.__title,
+                "title": self.title,
                 "payload": self.__payload,
             }
         elif self.__type == ButtonType.BOOKING:
             return {"type": self.__type}
         else:
-            return {"type": self.__type, "title": self.__title, "url": self.__url}
+            return {"type": self.__type, "title": self.title, "url": self.__url}
