@@ -75,14 +75,6 @@ class Button:
         elif self.__type == ButtonType.WEB_URL:
             self.__url = "<DEVELOPER_DEFINED_URL>"
 
-    def set_title(self, title):
-        if not  isinstance( title, str):
-            raise ValueError(f"type of param title must be str , not {type(title)}")
-
-        if not title.strip():
-            raise ValueError("param title must be non empty")
-
-        self.title = title
 
     def set_payload(self, payload):
         if  self.__type not in (
