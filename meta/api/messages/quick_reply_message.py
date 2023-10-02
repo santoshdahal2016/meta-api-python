@@ -1,3 +1,5 @@
+from meta.api.consts import QuickReplyType
+
 class QuickReplies:
     """A list of QuickReply objects.
 
@@ -12,7 +14,8 @@ class QuickReplies:
     """
 
     def __init__(self, text):
-        assert text != "", "param text must be non empty"
+        if  not text.strip():
+            raise ValueError("Text must not be empty")
 
         self.text = text
         self.__quick_replies = []
@@ -21,7 +24,12 @@ class QuickReplies:
         self.__quick_replies.append(quick_reply.asdict())
 
     def asdict(self):
-        return {"message": {"text": self.text, "quick_replies": self.__quick_replies}}
+        return {
+                "message": {
+                    "text": self.text, 
+                    "quick_replies": self.__quick_replies
+                }
+            }
 
 
 class QuickReply:
@@ -30,7 +38,7 @@ class QuickReply:
         title="Quick reply",
         payload="<DEVELOPER_DEFINED_PAYLOAD>",
         image_url=None,
-        type="text",
+        quick_reply_type="text",
     ):
         """Represent a quick reply , used for a quick reply message.
 
@@ -46,20 +54,35 @@ class QuickReply:
             Recommended resolution for the image in param image_url is 24x24.
             Use the asdict() method to get the content of the QuickReply object before using it.
         """
-        assert isinstance(
-            title, str
-        ), f"type of param title must be str , not {type(title)}"
-        assert title != "", "param title must be non empty"
-        assert isinstance(
-            payload, str
-        ), f"type of param payload must be str , not {type(payload)}"
-        assert payload != "", "param payload must be non empty"
-        assert len(str(payload)) < 1000, "max character of param payload is 1000"
+
+
+        if not  isinstance(title, str):
+            raise ValueError(f"type of param title must be str , not {type(title)}")
+        
+        if not title.strip():
+            raise ValueError("param title must be non empty")
+
+        if not  isinstance(payload, str):
+            raise ValueError(f"type of param payload must be str , not {type(payload)}")
+        
+        if not payload.strip():
+            raise ValueError("param payload must be non empty")
+
+        if len(str(payload)) > 1000:
+            raise ValueError("max character of param payload is 1000")
+
+
+        if  quick_reply_type not  in (
+                    QuickReplyType.TEXT,
+                    QuickReplyType.PHONE_NUMBER,
+                    QuickReplyType.EMAIL,
+                ):
+                    raise ValueError("param type must be TEXT, PHONE_NUMBER, EMAIL")
 
         self.__title = title
         self.__payload = payload
         self.__image_url = image_url
-        self.__type = type
+        self.__type = quick_reply_type
 
         if len(title) > 20:
             print(
@@ -67,10 +90,12 @@ class QuickReply:
             )
 
     def set_title(self, title):
-        assert isinstance(
-            title, str
-        ), f"type of param title must be str , not {type(title)}"
-        assert title != "", "param title must be non empty"
+        if not  isinstance( title, str):
+            raise ValueError(f"type of param title must be str , not {type(title)}")
+        
+        if not title.strip():
+            raise ValueError("param title must be non empty")
+
         if len(title) > 20:
             print(
                 "WARNING : max characters for param title is 20 , your title won't show entirely"
@@ -78,21 +103,41 @@ class QuickReply:
 
         self.__title = title
 
+
+    def get_title(self):
+        return self.__title
+
+
+
     def set_payload(self, payload):
-        assert isinstance(
-            payload, str
-        ), f"type of param payload must be str , not {type(payload)}"
-        assert payload != "", "param payload must be non empty"
-        assert len(str(payload)) < 1000, "max character of param payload is 1000"
+        if not  isinstance( payload, str):
+            raise ValueError(f"type of param payload must be str , not {type(payload)}")
+        
+        if not payload.strip():
+            raise ValueError("param payload must be non empty")
+
+        if len(str(payload)) > 1000:
+            raise ValueError("max character of param payload is 1000")
 
         self.__payload = str(payload)
 
+
+    def get_payload(self):
+        return self.__payload
+
     def set_image_url(self, image_url):
-        assert isinstance(
-            image_url, str
-        ), f"type of param image_url must be str , not {type(image_url)}"
+
+        if not  isinstance( image_url, str):
+            raise ValueError(f"type of param payload must be str , not {type(image_url)}")
 
         self.__image_url = image_url
+
+    def get_image_url(self):
+        return self.__image_url
+
+    def get_type(self):
+        return self.__type
+
 
     def asdict(self):
         """Return the content of the QuickReply object.

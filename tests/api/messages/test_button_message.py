@@ -21,7 +21,7 @@ def test_buttons_creation_fails():
 
 def test_button_creation():
     button_message = Button(title=BUTTON_TITLE)
-    assert button_message.title == BUTTON_TITLE
+    assert button_message.get_title() == BUTTON_TITLE
 
 
 def test_button_creation_fails():
@@ -128,3 +128,33 @@ def test_button_asdict():
 
 
     assert message_link_dict == button_url_message.asdict()
+
+
+def test_buttons_asdict():
+    buttons_message = Buttons(text=BUTTONS_TEXT)
+
+    message_dict = dict(
+        message = dict(
+            attachment = dict(
+                type = "template",
+                payload =dict(
+                    text=BUTTONS_TEXT,
+                    template_type = "button",
+                    buttons = [dict(
+                        type=ButtonType.POSTBACK,
+                        title=BUTTON_TITLE,
+                        payload=BUTTON_PAYLOAD
+                    )]
+                )
+            ) 
+        )
+	)
+
+
+    button_message = Button(title=BUTTON_TITLE)
+    button_message.set_payload(BUTTON_PAYLOAD)
+
+    buttons_message.add_button(button_message)
+
+
+    assert message_dict == buttons_message.asdict()

@@ -61,14 +61,14 @@ class Button:
         ):
             raise ValueError("param type must be POSTBACK, WEB_URL, BOOKING  or PHONE_NUMBER")
 
-        if not  isinstance( title, str):
+        if not  isinstance(title, str):
             raise ValueError(f"type of param title must be str , not {type(title)}")
 
         if not title.strip():
             raise ValueError("param title must be non empty")
 
         self.__type = button_type
-        self.title = title
+        self.__title = title
 
         if self.__type == ButtonType.POSTBACK:
             self.__payload = "<DEVELOPER_DEFINED_PAYLOAD>"
@@ -106,6 +106,8 @@ class Button:
     def get_url(self):
         return self.__url
 
+    def get_title(self):
+        return self.__title
 
     def asdict(self):
         """Return the content of the Button object.
@@ -116,10 +118,10 @@ class Button:
         if self.__type == ButtonType.POSTBACK or self.__type == ButtonType.PHONE_NUMBER:
             return {
                 "type": self.__type,
-                "title": self.title,
+                "title": self.__title,
                 "payload": self.__payload,
             }
         elif self.__type == ButtonType.BOOKING:
             return {"type": self.__type}
         else:
-            return {"type": self.__type, "title": self.title, "url": self.__url}
+            return {"type": self.__type, "title": self.__title, "url": self.__url}
