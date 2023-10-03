@@ -56,51 +56,24 @@ class QuickReply:
         """
 
 
-        if not  isinstance(title, str):
-            raise ValueError(f"type of param title must be str , not {type(title)}")
-        
-        if not title.strip():
-            raise ValueError("param title must be non empty")
-
-        if not  isinstance(payload, str):
-            raise ValueError(f"type of param payload must be str , not {type(payload)}")
-        
-        if not payload.strip():
-            raise ValueError("param payload must be non empty")
-
-        if len(str(payload)) > 1000:
-            raise ValueError("max character of param payload is 1000")
+        self.__validate_title(title)
+        self.__validate__payload(payload)
+        self.__validate_image(image_url)
+        self.__validate_type(quick_reply_type)
 
 
-        if  quick_reply_type not  in (
-                    QuickReplyType.TEXT,
-                    QuickReplyType.PHONE_NUMBER,
-                    QuickReplyType.EMAIL,
-                ):
-                    raise ValueError("param type must be TEXT, PHONE_NUMBER, EMAIL")
+
+
 
         self.__title = title
         self.__payload = payload
         self.__image_url = image_url
         self.__type = quick_reply_type
 
-        if len(title) > 20:
-            print(
-                "WARNING : max characters for param title is 20 , your title won't show entirely"
-            )
 
     def set_title(self, title):
-        if not  isinstance( title, str):
-            raise ValueError(f"type of param title must be str , not {type(title)}")
         
-        if not title.strip():
-            raise ValueError("param title must be non empty")
-
-        if len(title) > 20:
-            print(
-                "WARNING : max characters for param title is 20 , your title won't show entirely"
-            )
-
+        self.__validate_title(title)
         self.__title = title
 
 
@@ -110,15 +83,7 @@ class QuickReply:
 
 
     def set_payload(self, payload):
-        if not  isinstance( payload, str):
-            raise ValueError(f"type of param payload must be str , not {type(payload)}")
-        
-        if not payload.strip():
-            raise ValueError("param payload must be non empty")
-
-        if len(str(payload)) > 1000:
-            raise ValueError("max character of param payload is 1000")
-
+        self.__validate__payload(payload)
         self.__payload = str(payload)
 
 
@@ -127,8 +92,7 @@ class QuickReply:
 
     def set_image_url(self, image_url):
 
-        if not  isinstance( image_url, str):
-            raise ValueError(f"type of param payload must be str , not {type(image_url)}")
+        self.__validate_image(image_url)
 
         self.__image_url = image_url
 
@@ -161,3 +125,44 @@ class QuickReply:
             }
         else:
             return {"content_type": self.__type}
+
+    def __validate_title(self,title):        
+        if not  isinstance(title, str):
+            raise ValueError(f"type of param title must be str , not {type(title)}")
+        
+        if not title.strip():
+            raise ValueError("param title must be non empty")
+
+        if len(title) > 20:
+            print(
+                "WARNING : max characters for param title is 20 , your title won't show entirely"
+            )
+
+
+    def __validate__payload(self,payload):
+
+        if not  isinstance(payload, str):
+            raise ValueError(f"type of param payload must be str , not {type(payload)}")
+        
+        if not payload.strip():
+            raise ValueError("param payload must be non empty")
+
+        if len(str(payload)) > 1000:
+            raise ValueError("max character of param payload is 1000")
+
+    def __validate_image(self,image_url):
+
+        if image_url is None:
+            return True
+        
+        if not  isinstance( image_url, str):
+            raise ValueError(f"type of param payload must be str , not {type(image_url)}")
+
+
+    def __validate_type(self, quick_reply_type):
+        if  quick_reply_type not  in (
+            QuickReplyType.TEXT,
+            QuickReplyType.PHONE_NUMBER,
+            QuickReplyType.EMAIL,
+        ):
+            raise ValueError("param type must be TEXT, PHONE_NUMBER, EMAIL")
