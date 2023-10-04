@@ -11,9 +11,10 @@ class Elements:
         The maximum of elements is 10 , sending generic message with more than 10 elements will return an error message from Facebook API's server.
     """
 
-    def __init__(self, image_aspect_ratio: str = "horizontal"):
-        self.__elements = []
-        self.__image_aspect_ratio = image_aspect_ratio
+    def __init__(self, elements= None):
+        self.__elements =  (
+            [item.asdict() for item in elements] if elements is not None else []
+        )
 
     def add_element(self, element):
         self.__elements.append(element.asdict())
@@ -25,7 +26,6 @@ class Elements:
                     "type": "template",
                     "payload": {
                         "template_type": "generic",
-                        "image_aspect_ratio": self.__image_aspect_ratio,
                         "elements": self.__elements,
                     },
                 }
@@ -53,10 +53,10 @@ class Element:
             param image_url and buttons must be non-empty.
             Use the asdict() method to get the content of the Element object before using it in an generic message or an Elements object.
         """
-        assert isinstance(
-            title, str
-        ), f"type of param title must be str , not {type(title)}"
-        assert title != "", "param title must be non empty"
+        self.__validate_title(title)
+        self.__validate_subtitle(subtitle)
+        self.__validate_image_url(image_url)
+        self.__validate_button(buttons)
 
         self.__title = title
         self.__subtitle = subtitle
@@ -65,27 +65,18 @@ class Element:
             [item.asdict() for item in buttons] if buttons is not None else []
         )
 
-        if self.__image_url == None or len(self.__buttons) == 0:
-            print("WARNING : param image_url and buttons must be non-empty.")
 
     def set_title(self, title):
-        assert isinstance(
-            title, str
-        ), f"type of param title must be str , not {type(title)}"
-        assert title != "", "param title must be non empty"
-
+        self.__validate_title(title)
         self.__title = title
 
+
     def set_subtitle(self, subtitle):
-        assert isinstance(
-            subtitle, str
-        ), f"type of param subtitle must be str , not {type(subtitle)}"
+        self.__validate_subtitle(subtitle)
         self.__subtitle = subtitle
 
     def set_image_url(self, image_url):
-        assert isinstance(
-            image_url, str
-        ), f"type of param image_url must be str , not {type(image_url)}"
+        self.__validate_image_url(image_url)
 
         self.__image_url = image_url
 
@@ -110,3 +101,28 @@ class Element:
             "image_url": self.__image_url,
             "buttons": self.__buttons,
         }
+
+
+    def __validate_title(self,title):        
+        if not  isinstance(title, str):
+            raise ValueError(f"type of param title must be str , not {type(title)}")
+        
+        if not title.strip():
+            raise ValueError("param title must be non empty")
+
+    def __validate_subtitle(self,subtitle):
+        if subtitle is not None:
+            if not  isinstance(subtitle, str):
+                raise ValueError(f"type of param subtitle must be str , not {type(subtitle)}")
+            
+    def __validate_image_url(self,image_url):
+        if not  isinstance(image_url, str):
+            raise ValueError(f"type of param image_url must be str , not {type(image_url)}")
+        
+        if not image_url.strip():
+            raise ValueError("param image_url must be non empty")
+
+    def __validate_button(self,buttons):
+
+        if len(buttons) == 0:
+            raise ValueError("Element must have atleast one button")
