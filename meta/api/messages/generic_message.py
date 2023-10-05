@@ -71,14 +71,25 @@ class Element:
         self.__title = title
 
 
+    def get_title(self):
+        return self.__title
+
+
     def set_subtitle(self, subtitle):
         self.__validate_subtitle(subtitle)
         self.__subtitle = subtitle
+
+    def get_subtitle(self):
+        return self.__subtitle
 
     def set_image_url(self, image_url):
         self.__validate_image_url(image_url)
 
         self.__image_url = image_url
+
+
+    def get_image_url(self):
+        return self.__image_url
 
     def add_button(self, button):
         self.__buttons.append(button.asdict())
