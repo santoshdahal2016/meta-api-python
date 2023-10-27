@@ -25,7 +25,7 @@ class ApiRequestSender(object):
                     endpoint, payload, response.content
                 )
             )
-            # raise e
+            # raise ex
         except Exception as ex:
             # pass
             self._logger.error(
@@ -34,3 +34,4 @@ class ApiRequestSender(object):
                 )
             )
             # raise ex
+           
