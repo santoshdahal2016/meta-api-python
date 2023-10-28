@@ -3,8 +3,8 @@ from dataclasses import dataclass
 
 
 import requests
-from meta.api.message_sender import MessageSender
-from meta.api.api_request_sender import ApiRequestSender
+from metapython.api.message_sender import MessageSender
+from metapython.api.api_request_sender import ApiRequestSender
 
 
 @dataclass

@@ -1,4 +1,4 @@
-# meta-api-python
+# meta_api_python
 
 Python Wrapper to various APIs from [Meta Platform](https://developers.facebook.com/docs/messenger-platform).
 
@@ -54,29 +54,29 @@ response = api.send_messages(to= <recipient_id>, messages=text_message)
 > [Generic Template Messages](https://developers.facebook.com/docs/messenger-platform/implementation#receive_message) allows you to add cool elements like images, text all in a single bubble.
 
 ```python
-from meta.api.api import Api
-from meta.api.messages.text_message import TextMessage
+from metapython import Api
 
-from meta.api.messages.generic_message import Element, Elements
-from meta.api.messages.button_message import Button, Buttons, ButtonType
+from metapython.api.consts import ButtonType
+from metapython.api.messages import ElementMessage, ElementsMessage, ButtonMessage, ButtonsMessage
+
 
 api = Api(page_access_token=<page_access_token>)
 
 # Generic Message
-elements = Elements()
+elements = ElementsMessage()
 
-web_link_button = Button(button_type=ButtonType.WEB_URL, title="Visit Diyo Website")
+web_link_button = ButtonMessage(button_type=ButtonType.WEB_URL, title="Visit Diyo Website")
 web_link_button.set_url(<url>)
 
-element1 = Element(
+element1 = ElementMessage(
     buttons=[web_link_button],
     image_url="https://moneymitra.com/static/image/moneymitra-logo.png",
 )
 elements.add_element(element1)
 
-phone_number_button = Button(button_type=ButtonType.PHONE_NUMBER, title="Call me")
+phone_number_button = ButtonMessage(button_type=ButtonType.PHONE_NUMBER, title="Call me")
 phone_number_button.set_payload("XXXXXXXXXXX")
-element2 = Element(
+element2 = ElementMessage(
     buttons=[phone_number_button],
     image_url=<image_url>,
 )

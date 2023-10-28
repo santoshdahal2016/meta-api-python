@@ -1,6 +1,6 @@
-from meta.api.consts import QuickReplyType
+from metapython.api.consts import QuickReplyType
 
-class QuickReplies:
+class QuickRepliesMessage:
     """A list of QuickReply objects.
 
     Attributes:
@@ -32,7 +32,7 @@ class QuickReplies:
             }
 
 
-class QuickReply:
+class QuickReplyMessage:
     def __init__(
         self,
         title="Quick reply",

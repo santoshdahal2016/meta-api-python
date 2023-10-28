@@ -1,5 +1,5 @@
-from meta.api.messages.generic_message import Element, Elements
-from meta.api.messages.button_message import Button, ButtonType
+from metapython.api.messages.generic_message import ElementMessage, ElementsMessage
+from metapython.api.messages.button_message import ButtonMessage, ButtonType
 
 import pytest
 
@@ -10,11 +10,11 @@ BUTTON_TITLE = "Visit  Website"
 BUTTON_URL = "https://"
 
 
-web_link_button = Button(button_type=ButtonType.WEB_URL, title=BUTTON_TITLE)
+web_link_button = ButtonMessage(button_type=ButtonType.WEB_URL, title=BUTTON_TITLE)
 web_link_button.set_url(BUTTON_URL)  
 
 
-element = Element(
+element = ElementMessage(
     buttons=[web_link_button],
     image_url=ELEMENT_IMAGE_URL,
     title=ELEMENT_TITLE,
@@ -92,7 +92,7 @@ def test_generic_elements_asdict():
 		
 	)
 
-    elements = Elements(elements=[element])
+    elements = ElementsMessage(elements=[element])
 
 
 

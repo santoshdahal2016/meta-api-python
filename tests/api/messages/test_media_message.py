@@ -1,6 +1,6 @@
-from meta.api.messages.media_message import MediaMessage
+from metapython.api.messages.media_message import MediaMessage
 
-from meta.api.consts import MediaType, MessagingType, NotificationType
+from metapython.api.consts import MediaType, MessagingType, NotificationType
 
 import pytest
 

@@ -1,5 +1,5 @@
-from meta.api.messages.text_message import TextMessage
-from meta.api.consts import MessagingType, NotificationType
+from metapython.api.messages.text_message import TextMessage
+from metapython.api.consts import MessagingType, NotificationType
 
 import pytest
 

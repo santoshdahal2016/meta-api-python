@@ -5,8 +5,8 @@ import pytest
 
 from requests.exceptions import RequestException
 
-from meta.api.api_request_sender import ApiRequestSender
-from meta.api.consts import API_URL, APIEndpoint
+from metapython.api.api_request_sender import ApiRequestSender
+from metapython.api.consts import API_URL, APIEndpoint
 
 
 class Stub(object): 

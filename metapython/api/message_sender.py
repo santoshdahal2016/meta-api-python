@@ -1,4 +1,4 @@
-from meta.api.messages.message import Message
+from metapython.api.messages.message import Message
 
 from .consts import API_URL, APIEndpoint
 

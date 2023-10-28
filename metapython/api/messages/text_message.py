@@ -1,4 +1,4 @@
-from meta.api.messages.message import Message
+from metapython.api.messages.message import Message
 from abc import abstractmethod
 from dataclasses import dataclass, asdict
 

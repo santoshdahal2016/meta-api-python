@@ -1,7 +1,7 @@
 import requests
 from requests import RequestException
 import traceback
-from meta.api.consts import API_URL, APIEndpoint
+from metapython.api.consts import API_URL, APIEndpoint
 import json
 from dataclasses import dataclass
 import logging

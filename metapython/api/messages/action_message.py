@@ -1,8 +1,8 @@
-from meta.api.consts import SenderAction
+from metapython.api.consts import SenderAction
 from dataclasses import dataclass, asdict
 
 @dataclass
-class Action:
+class ActionMessage:
     """This represent action i.e seen , typing.
     """
     event: str

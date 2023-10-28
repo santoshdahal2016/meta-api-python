@@ -1,7 +1,7 @@
-from meta.api.consts import ButtonType
+from metapython.api.consts import ButtonType
 
 
-class Buttons:
+class ButtonsMessage:
     """A list of Button objects.
 
     Attributes:
@@ -39,7 +39,7 @@ class Buttons:
         }
 
 
-class Button:
+class ButtonMessage:
     def __init__(self, button_type=ButtonType.POSTBACK, title="Button"):
         """Represent a button , used for generic message , persistent menu , ...
 

@@ -24,11 +24,15 @@ with open("README.md", "r") as f:
 PACKAGES = find_packages()
 
 # Create the setup configuration
+
+print(f'Name set to: {NAME}')
+
 setup(
     name=NAME,
     version=VERSION,
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
+    long_description_content_type='text/markdown',
     author=AUTHOR,
     author_email=EMAIL,
     url=URL,

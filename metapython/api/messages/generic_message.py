@@ -1,4 +1,4 @@
-class Elements:
+class ElementsMessage:
     """A list of Element objects.
 
     Attributes:
@@ -33,7 +33,7 @@ class Elements:
         }
 
 
-class Element:
+class ElementMessage:
     def __init__(
         self,
         title="An element of a generic message.",

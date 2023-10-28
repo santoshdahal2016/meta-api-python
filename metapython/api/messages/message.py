@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from abc import abstractmethod, abstractclassmethod
-from meta.api.consts import MessagingType, NotificationType
+from metapython.api.consts import MessagingType, NotificationType
 
 
 @dataclass
